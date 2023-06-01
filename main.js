@@ -2,28 +2,30 @@ const button = document.querySelector('.container__button');
 const input  = document.querySelector('.container__input');
 const ul = document.querySelector('.container__list');
 
-button.addEventListener('click', () => createTask());
+button.addEventListener('click', createTask);
 
 function createTask(){
     const div = document.createElement('div');
     const li = document.createElement('li');
     const deleteButton = document.createElement('button');
 
-    deleteButton.setAttribute('class', 'list-item__delete-button');
+    deleteButton.classList.add('list-item__delete-button');
     deleteButton.innerText = 'X';
-    deleteButton.addEventListener('click', (e) => e.target.parentElement.parentElement.remove());
+    deleteButton.addEventListener('click', (e) =>{
+        e.target.parentElement.parentElement.remove();
+});
 
-    div.setAttribute('class', 'div');
+    div.classList.add('div');
     
-    li.setAttribute('class', 'list-item');
+    li.classList.add('list-item');
     li.textContent = input.value;
 
+    li.appendChild(deleteButton);
     div.appendChild(li);
     ul.appendChild(div);
 
-    li.appendChild(deleteButton);
+    
     draggable(li);
-
     dropTo(div);
 
     input.value = '';
@@ -46,15 +48,15 @@ function dropTo(item){
     item.addEventListener('dragover', (e)=>{
         e.preventDefault();
         if(dragend !== e.target){
-            dragend.setAttribute('class', 'dragged');
-            e.target.setAttribute('class', 'drag-over')
+            dragend.classList.add('dragged');
+            e.target.classList.add('drag-over')
         }
     });
 
     item.addEventListener('dragleave', (e)=>{
         let elementsArr = e.target.parentElement.parentElement.children;
         for(element of elementsArr){
-            element.firstChild.setAttribute('class', 'list-item')
+            element.firstChild.classList.remove('drag-over')
         }
     })
 
@@ -63,7 +65,8 @@ function dropTo(item){
         e.target.innerHTML = e.dataTransfer.getData('text/html');
         let elementsArr = e.target.parentElement.parentElement.children;
         for(element of elementsArr){
-            element.firstChild.setAttribute('class', 'list-item')
+            element.firstChild.classList.remove('class', 'drag-over')
+            element.firstChild.classList.remove('class', 'dragged')
         }
     })
 }
