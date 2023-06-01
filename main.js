@@ -1,46 +1,70 @@
-const button = document.querySelector('.button');
-const input  = document.querySelector('.input');
-const ul = document.querySelector('.to-do-list');
+const button = document.querySelector('.container__button');
+const input  = document.querySelector('.container__input');
+const ul = document.querySelector('.container__list');
 
 button.addEventListener('click', () => createTask());
 
 function createTask(){
+    const div = document.createElement('div');
     const li = document.createElement('li');
     const deleteButton = document.createElement('button');
 
-    deleteButton.setAttribute('class', 'delete-button');
+    deleteButton.setAttribute('class', 'list-item__delete-button');
     deleteButton.innerText = 'X';
-    deleteButton.addEventListener('click', (e) => console.log(e.target.parentElement.remove()));
+    deleteButton.addEventListener('click', (e) => e.target.parentElement.parentElement.remove());
+
+    div.setAttribute('class', 'div');
     
     li.setAttribute('class', 'list-item');
     li.textContent = input.value;
 
-    let sexo = createElement('div', ul, 'div-drop');
-    ul.appendChild(li);
-    createElement('div', ul, 'div-drop');
+    div.appendChild(li);
+    ul.appendChild(div);
 
     li.appendChild(deleteButton);
     draggable(li);
 
+    dropTo(div);
+
     input.value = '';
     input.focus();
-    console.log(sexo)
 }
 
-function createElement(element, parent, className){
-    element = document.createElement(`${element}`);
-    parent.appendChild(element);
-    element.setAttribute('class', `${className}`);
-    return element
-}
-
-function draggable(item, dropElement){
+function draggable(item){
     item.setAttribute('draggable', 'true');
 
-    item.addEventListener('dragstart', (event) =>{
-        event.dataTransfer.effectAllowed = 'move';
+    item.addEventListener('dragstart', (e) =>{
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/html', e.target.innerHTML);
+        dragend = e.target;
+    })
+}
+
+let dragend;
+
+function dropTo(item){
+    item.addEventListener('dragover', (e)=>{
+        e.preventDefault();
+        if(dragend !== e.target){
+            dragend.setAttribute('class', 'dragged');
+            e.target.setAttribute('class', 'drag-over')
+        }
+    });
+
+    item.addEventListener('dragleave', (e)=>{
+        let elementsArr = e.target.parentElement.parentElement.children;
+        for(element of elementsArr){
+            element.firstChild.setAttribute('class', 'list-item')
+        }
     })
 
-    dropElement
+    item.addEventListener('drop', (e)=>{
+        dragend.innerHTML = e.target.innerHTML;
+        e.target.innerHTML = e.dataTransfer.getData('text/html');
+        let elementsArr = e.target.parentElement.parentElement.children;
+        for(element of elementsArr){
+            element.firstChild.setAttribute('class', 'list-item')
+        }
+    })
 }
 

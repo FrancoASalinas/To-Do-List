@@ -12,7 +12,8 @@ body{
 
 .title{
     text-align: center;
-    padding: 50px
+    padding: 50px;
+    color: #1030dd
 }
 
 .container{
@@ -30,15 +31,21 @@ body{
     box-shadow: 2px 2px 1px #0003;
 }
 
-.input{
+.container__label{
+    color: #fff;
+    font-weight: 600
+}
+
+.container__input{
     display: block;
     padding: 8px;
     background-color: #9999ff;
     box-shadow: inset 3px 3px#0003;
     border: none;
+    width: 50%
 }
 
-.input:focus{
+.container__input:focus{
     border:none;
     outline: none;
     background-color: #9999ff;
@@ -46,19 +53,19 @@ body{
     outline: 5px solid #9999ff
 }
 
-.button{
+.container__button{
     background-color: #9999ff;
     border: none;
     padding: 8px 12px;
     box-shadow: 2px 2px 1px #0003
 }
 
-.button:active{
+.container__button:active{
     box-shadow : none;
     background-color: #5555aa;
 }
 
-.to-do-list{
+.container__list{
     width: 100%;
     padding: 20px 5px;
     display: flex;
@@ -70,6 +77,7 @@ body{
 }
 
 .list-item{
+
     display: block;
     width: 100%;
     padding: 15px;
@@ -81,7 +89,7 @@ body{
     align-items: center;
 }
 
-.delete-button{
+.list-item__delete-button{
     background-color: #5555aa;
     border: none;
     justify-self:flex-end;
@@ -89,6 +97,37 @@ body{
     border-radius: 20px;
 }
 
-.div-drop{
-    height: 10px;
+.div{
+    min-width: 100%;
+    min-height: 50px;
+}
+
+.dragged{
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #aaddff33;
+    box-shadow: 2px 2px #0003;
+    border-radius: 10px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.drag-over{
+    display: block;
+    width: 100%;
+    background-color: #aaddff;
+    box-shadow: 2px 2px #0003;
+    border-radius: 10px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 3px solid #000;
+}
+
+@media only screen and (min-width: 650px) {
+    .container{
+        width: 60%
+    }
 }
